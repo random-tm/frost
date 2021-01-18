@@ -1,0 +1,28 @@
+#!/bin/bash
+#Wrapper for package manger
+
+#Assume secure kernel; change if you plan to hot-reload the kernel
+KERNEL_IMG=initramfs-linux-grsec.img
+
+case $1 in
+	-upgrade)
+		yaourt -Syu --aur
+		;;
+	-clean)
+		yaourt -Sc
+		yaourt -Rns $(yaourt -Qtdq)
+		;;
+	-install)
+		yaourt -S "$2"
+		;;
+	-remove)
+		yaourt -Rsn "$2"
+		;;
+	-mirror-change)
+		sudo nano /etc/pacman.d/mirrorlist.pacnew
+		sudo rm /etc/pacman.d/mirrorlist
+		sudo mv /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist
+		;;
+	*)
+		echo "-upgrade, -clean, -install (package name), -mirror-change, -remove (package name); may cause crashes)"
+esac
