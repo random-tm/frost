@@ -1,9 +1,6 @@
 #!/bin/bash
 #Wrapper for package manger
 
-#Assume secure kernel; change if you plan to hot-reload the kernel
-KERNEL_IMG=initramfs-linux-grsec.img
-
 case $1 in
 	-upgrade)
 		yaourt -Syu --aur
@@ -24,5 +21,5 @@ case $1 in
 		sudo mv /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist
 		;;
 	*)
-		echo "-upgrade, -clean, -install (package name), -mirror-change, -remove (package name); may cause crashes)"
+		echo "-upgrade, -clean, -install (package name), -mirror-change, -remove (package name)"
 esac
