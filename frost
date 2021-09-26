@@ -3,17 +3,17 @@
 
 case $1 in
 	-upgrade)
-		yaourt -Syu --aur
+		yay -Syu --aur
 		;;
 	-clean)
-		yaourt -Sc
-		yaourt -Rns $(yaourt -Qtdq)
+		yay -Sc
+		yay -Rns $(yay -Qtdq)
 		;;
 	-install)
-		yaourt -S "$2"
+		yay -S "$2"
 		;;
 	-remove)
-		yaourt -Rsn "$2"
+		yay -Rsn "$2"
 		;;
 	-mirror-change)
 		sudo nano /etc/pacman.d/mirrorlist.pacnew
