@@ -3,7 +3,7 @@
 
 case $1 in
 	-upgrade)
-		yay -Syu --aur
+		yay -Syu
 		;;
 	-clean)
 		yay -Sc
