@@ -1,7 +1,7 @@
 # frost
-A wrapper for the yaourt package manager on Arch Linux
+A wrapper for the yay (previously yaourt) package manager on Arch Linux
 
-The goal of this project is to reduce the number of commands and commandline switches a user needs in order to update an Arch Linux machine
+The goal of this project is to reduce the number of commands and commandline switches a user needs in order to update an Arch\Manjaro Linux machine
 
 Commands:
 
