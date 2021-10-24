@@ -5,6 +5,8 @@ The goal of this project is to reduce the number of commands and commandline swi
 
 Commands:
 
+-search: Search for a package; syntax: frost -search searchTerm
+
 -upgrade: Upgrades the machine using the AUR repository and offical repos
 
 -clean: Removed unneeded and orphaned packages

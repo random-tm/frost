@@ -8,6 +8,9 @@ if ((EUID == 0)); then
 fi
 
 case $1 in
+	-search)
+		yay -Ss "$2"
+		;;
 	-upgrade)
 		yay -Syu
 		;;
@@ -27,5 +30,5 @@ case $1 in
 		sudo mv /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist
 		;;
 	*)
-		echo "-upgrade, -clean, -install (package name), -mirror-change, -remove (package name)"
+		echo "-upgrade, -clean, -install (package name), -mirror-change, -remove (package name), -search (search term)"
 esac
