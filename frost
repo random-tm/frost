@@ -1,6 +1,12 @@
 #!/bin/bash
 #Wrapper for package manger
 
+# Running as root breaks this script on yay; AUR wrappers are not supposed to be run as root anyways
+if ((EUID == 0)); then
+  echo "Do not run as root"
+  exit 1
+fi
+
 case $1 in
 	-upgrade)
 		yay -Syu
