@@ -1,5 +1,5 @@
 # frost
-A wrapper for the yay (previously yaourt) package manager on Arch Linux
+A wrapper for pacman and retrieving packages from an Arch Linux AUR buildbox; please see: https://github.com/FriedMicro/aur-build-server to setup the build server
 
 The goal of this project is to reduce the number of commands and commandline switches a user needs in order to update an Arch\Manjaro Linux machine
 
