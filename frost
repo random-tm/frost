@@ -1,7 +1,6 @@
 #!/bin/bash
-#Wrapper for package manger
+#Wrapper for pacman and AUR helper; intended for use with a build box
 
-# Running as root breaks this script on yay; AUR wrappers are not supposed to be run as root anyways
 if ((EUID == 0)); then
   echo "Do not run as root"
   exit 1
@@ -9,20 +8,32 @@ fi
 
 case $1 in
 	-search)
-		yay -Ss "$2"
+		sudo pacman -Ss "$2"
 		;;
 	-upgrade)
-		yay -Syu
+		sudo pacman -Syu
+		cd /tmp
+		cat /opt/frost | while read line;
+		do
+			VERSION=$(wget -O- -q http://192.168.1.30:8000/$line.version)
+			CURRENT_VERSION=$(cat /opt/frost-versions/$line)
+			if [[ "$VERSION" !=  "$CURRENT_VERSION" ]]; then
+				wget http://192.168.1.30:8000/$line.pkg.tar.zst
+				sudo pacman -U --noconfirm $line.pkg.tar.zst
+                        	rm *.pkg.tar.zst
+				echo $VERSION > /opt/frost-versions/$line
+			fi
+		done
 		;;
 	-clean)
-		yay -Sc
-		yay -Rns $(yay -Qtdq)
+		sudo pacman -Sc
+		sudo pacman -Rns $(yay -Qtdq)
 		;;
 	-install)
-		yay -S "$2"
+		sudo pacman -S "$2"
 		;;
 	-remove)
-		yay -Rsn "$2"
+		sudo pacman -Rsn "$2"
 		;;
 	-mirror-change)
 		sudo nano /etc/pacman.d/mirrorlist.pacnew
