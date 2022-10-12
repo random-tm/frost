@@ -11,6 +11,7 @@ case $1 in
 		sudo pacman -Ss "$2"
 		;;
 	-upgrade)
+		sudo pacman -Sc --noconfirm
 		sudo pacman -Syu
 		cd /tmp
 		cat /opt/frost | while read line;
