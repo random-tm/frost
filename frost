@@ -28,7 +28,7 @@ case $1 in
 		;;
 	-clean)
 		sudo pacman -Sc
-		sudo pacman -Rns $(yay -Qtdq)
+		sudo pacman -Rns $(pacman -Qtdq)
 		;;
 	-install)
 		sudo pacman -S "$2"
