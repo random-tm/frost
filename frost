@@ -6,6 +6,8 @@ if ((EUID == 0)); then
   exit 1
 fi
 
+/opt/frost-scripts/pre-hook.sh
+
 case $1 in
 	-search)
 		sudo pacman -Ss "$2"
@@ -14,17 +16,20 @@ case $1 in
 		sudo pacman -Sc --noconfirm
 		sudo pacman -Syu
 		cd /tmp
+		/opt/frost-scripts/post-pac-hook.sh
+		BUILD_BOX_IP=$(cat /opt/frost-conf/ip)
 		cat /opt/frost | while read line;
 		do
-			VERSION=$(wget -O- -q http://192.168.1.30:8000/$line.version)
+			VERSION=$(wget -O- -q http://$BUILD_BOX_IP:8000/$line.version)
 			CURRENT_VERSION=$(cat /opt/frost-versions/$line)
 			if [[ "$VERSION" !=  "$CURRENT_VERSION" ]]; then
-				wget http://192.168.1.30:8000/$line.pkg.tar.zst
+				wget http://$BUILD_BOX_IP:8000/$line.pkg.tar.zst
 				sudo pacman -U --noconfirm $line.pkg.tar.zst
                         	rm *.pkg.tar.zst
 				echo $VERSION > /opt/frost-versions/$line
 			fi
 		done
+		/opt/frost-scripts/post-build-box-hook.sh
 		;;
 	-clean)
 		sudo pacman -Sc
@@ -44,3 +49,5 @@ case $1 in
 	*)
 		echo "-upgrade, -clean, -install (package name), -mirror-change, -remove (package name), -search (search term)"
 esac
+
+/opt/frost-scripts/post-hook.sh
