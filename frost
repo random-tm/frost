@@ -24,7 +24,7 @@ case $1 in
 			CURRENT_VERSION=$(cat /opt/frost-versions/$line)
 			if [[ "$VERSION" !=  "$CURRENT_VERSION" ]]; then
 				wget http://$BUILD_BOX_IP:8000/$line.pkg.tar.zst
-				sudo pacman -U --noconfirm $line.pkg.tar.zst
+				sudo pacman -U --noconfirm --needed $line.pkg.tar.zst
                         	rm *.pkg.tar.zst
 				echo $VERSION > /opt/frost-versions/$line
 			fi
