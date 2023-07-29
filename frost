@@ -22,10 +22,13 @@ case $1 in
 		do
 			VERSION=$(wget -O- -q http://$BUILD_BOX_IP:8000/$line.version)
 			CURRENT_VERSION=$(cat /opt/frost-versions/$line)
-			if [[ "$VERSION" !=  "$CURRENT_VERSION" ]]; then
+			if [[ "$VERSION" != "$CURRENT_VERSION" || "$2" == "force" ]]; then
 				wget http://$BUILD_BOX_IP:8000/$line.pkg.tar.zst
+				if [[ "$2" == "force" ]]; then
+					sudo pacman -Rd --nodeps --noconfirm $line
+				fi
 				sudo pacman -U --noconfirm --needed $line.pkg.tar.zst
-                        	rm *.pkg.tar.zst
+				rm *.pkg.tar.zst
 				echo $VERSION > /opt/frost-versions/$line
 			fi
 		done
