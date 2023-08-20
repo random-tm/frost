@@ -1,9 +1,17 @@
 #!/bin/bash
 #Wrapper for pacman and AUR helper; intended for use with a build box
 
-if ((EUID == 0)); then
-  echo "Do not run as root"
-  exit 1
+if [ "$2" != "-unsafe" ] || [ "$3" != "-unsafe" ] 
+then
+        if ((EUID == 0)); then
+                if [ "$3" != "" ]
+                then
+                        echo "Do not run as root"
+                        exit 1
+                fi
+        fi
+else
+        echo "Warning; running frost as root"
 fi
 
 /opt/frost-scripts/pre-hook.sh
